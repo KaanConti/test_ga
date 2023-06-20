@@ -13,3 +13,25 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Set up C++ build environment
+      uses: actions/setup-cpp@v1
+      with:
+        compiler: 'gcc'
+
+    - name: Build C++ code
+      run: |
+        g++ -Wall -c main.cpp -o main.o
+        g++ main.o -o main
+
+    - name: Capture and display warnings
+      run: |
+        if [ -e main.log ]; then
+          rm main.log
+        fi
+        g++ -Wall -fsyntax-only main.cpp 2> main.log
+        if [ -s main.log ]; then
+          cat main.log
+          exit 1
+        fi
+
+
