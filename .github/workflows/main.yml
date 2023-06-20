@@ -27,5 +27,5 @@ jobs:
       
     - name: Count warnings
       run: |
-        echo "Total Warnings: $(grep -c 'warning: unused variable' warnings.txt)"
+        echo "Total Warnings: $(grep -c 'warning' warnings.txt)"
 
