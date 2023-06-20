@@ -11,21 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Post warnings/errors as PR comment
-      uses: JacobDomagala/CompileResult@v0.0.2
+      - name: Post warnings/errors as PR comment
+        uses: JacobDomagala/CompileResult@master
+        with:
+          comment_title: UBUNTU COMPILE RESULT
+          compile_result_file: ${{runner.workspace}}/build/output.txt
 
-    - name: Install g++
-      run: sudo apt-get -y install g++
+      - name: Install g++
+        run: sudo apt-get -y install g++
 
-    - name: Build C++ code
-      run: g++ -Wall -c main.cpp -o main.o && g++ main.o -o main
+      - name: Build C++ code
+        run: g++ -Wall -c main.cpp -o main.o && g++ main.o -o main
 
-    - name: Capture and display warnings
-      run: g++ -Wall -Wunused-variable main.cpp -o main 2> warnings.txt
+      - name: Capture and display warnings
+        run: g++ -Wall -Wunused-variable main.cpp -o main 2> >(tee "warnings.txt")
 
-    - name: Show warnings
-      run: cat warnings.txt
-
+      - name: Show warnings
+        run: cat warnings.txt
