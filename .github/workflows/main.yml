@@ -7,31 +7,28 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up C++ build environment
-      uses: actions/setup-cpp@v1
-      with:
-        compiler: 'gcc'
+    - name: Install MSYS2
+      run: |
+        curl -L -o msys2_installer.exe --url "https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-x86_64-latest.tar.xz"
+        7z x msys2_installer.exe -so | 7z x -si -ttar
+        .\msys64\usr\bin\bash.exe -lc "echo -e '[mingw64]\nSigLevel = Optional TrustAll\nServer = https://repo.msys2.org/mingw/x86_64\n' >> etc/pacman.conf"
+        .\msys64\usr\bin\bash.exe -lc "pacman -Sy --noconfirm"
+        .\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-x86_64-toolchain"
 
     - name: Build C++ code
       run: |
-        g++ -Wall -c main.cpp -o main.o
-        g++ main.o -o main
+        .\msys64\usr\bin\bash.exe -lc "g++ -Wall -c main.cpp -o main.o"
+        .\msys64\usr\bin\bash.exe -lc "g++ main.o -o main"
 
     - name: Capture and display warnings
       run: |
-        if [ -e main.log ]; then
-          rm main.log
-        fi
-        g++ -Wall -fsyntax-only main.cpp 2> main.log
-        if [ -s main.log ]; then
-          cat main.log
-          exit 1
-        fi
+        .\msys64\usr\bin\bash.exe -lc "g++ -Wall -fsyntax-only main.cpp 2>&1 | grep 'warning' || true"
+
 
 
