@@ -19,7 +19,6 @@ jobs:
     - name: Compile C++ code
       run: g++ -Wall -Wunused-variable main.cpp -o main 2> warnings.txt
 
-
     - name: Show warnings
       run: cat warnings.txt
       
