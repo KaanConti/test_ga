@@ -1,4 +1,4 @@
- statuname: Continuous Integration
+name: Continuous Integration
 
 on:
   push:
@@ -12,3 +12,4 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
