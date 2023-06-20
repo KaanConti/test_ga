@@ -16,6 +16,9 @@ jobs:
     - name: Install g++
       run: sudo apt-get -y install g++
 
+    - name: Build C++ code
+      run: g++ -Wall -c main.cpp -o main.o
+
     - name: Compile C++ code
       run: g++ -Wall -c -E main.cpp -o /dev/null 2> warnings.txt
 
