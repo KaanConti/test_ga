@@ -7,30 +7,21 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install Git for Windows
-      run: |
-        choco install git -y --params "/GitAndUnixToolsOnPath /NoAutoCrlf"
-
-    - name: Set up Git Bash environment
-      shell: bash
-      run: |
-        export MSYS_NO_PATHCONV=1
-        export MSYS2_PATH_TYPE=inherit
-        export PATH="/usr/bin:$PATH"
-        echo ::add-path::/usr/bin
-
-    - name: Install GCC
-      run: |
-        pacman --noconfirm -S mingw-w64-x86_64-gcc
+    - name: Install g++
+      run: sudo apt-get -y install g++
 
     - name: Build C++ code
       run: g++ -Wall -c main.cpp -o main.o && g++ main.o -o main
 
     - name: Capture and display warnings
-      run: g++ -Wall -fsyntax-only main.cpp 2>&1 | grep 'warning' || true
+      run: g++ -Wall -fsyntax-only main.cpp -o /dev/null 2>&1 | tee warnings.txt
+
+    - name: Show warnings
+      run: cat warnings.txt
+
