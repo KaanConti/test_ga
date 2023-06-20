@@ -13,11 +13,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install g++
+    - name: Install g++ 
       run: sudo apt-get -y install g++
 
     - name: Compile C++ code
-      run: g++ -Wall -Wunused-variable main.cpp -o main 2> warnings.txt
+      run: g++ -Wall -Wextra -Wformat -Wfloat-equal -Wunused-parameter -Wshadow -Wunused-variable main.cpp -o main 2> warnings.txt
 
     - name: Show warnings
       run: cat warnings.txt
