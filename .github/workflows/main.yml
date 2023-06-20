@@ -20,7 +20,7 @@ jobs:
       run: g++ -Wall -c main.cpp -o main.o && g++ main.o -o main
 
     - name: Capture and display warnings
-      run: g++ -Wall -Wunused-variable -fsyntax-only main.cpp -o /dev/null 2>&1 | tee warnings.txt
+      run: g++ -Wall -Wunused-variable main.cpp -o main 2> warnings.txt
 
     - name: Show warnings
       run: cat warnings.txt
