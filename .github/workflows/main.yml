@@ -31,3 +31,7 @@ jobs:
 
       - name: Show warnings
         run: cat warnings.txt
+        
+      - name: Count warnings
+        run: |
+          echo "Total Warnings: $(grep -c 'warning:' warnings.txt)"
