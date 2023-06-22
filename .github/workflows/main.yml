@@ -33,9 +33,6 @@ jobs:
       - name: Install g++
         run: sudo apt-get -y install g++
 
-      - name: Build C++ code
-        run: g++ -Wall -c main.cpp -o main.o && g++ main.o -o main
-
       - name: Capture and display warnings
         run: g++ -Wall -Wunused-variable main.cpp -o main 2> >(tee "warnings.txt")
 
