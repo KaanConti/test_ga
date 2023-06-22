@@ -3,6 +3,5 @@ int main(){
     int b;
     int c;
 
-
     return 0;
 }
