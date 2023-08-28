@@ -2,6 +2,7 @@ int main(){
     int kaan;
     int b;
     int c;
-efg
+.
+test
     return 0;
 }
